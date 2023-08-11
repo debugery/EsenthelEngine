@@ -1258,7 +1258,7 @@ void CodeEditor::update(Bool active)
       {
          if(build_region .contains(Gui.ms()))visibleOutput       (false);else
          if(devlog_region.contains(Gui.ms()))visibleAndroidDevLog(false);else
-         if(code_tabs    .contains(Gui.ms())){REPA(code_tabs)if(code_tabs.tab(i).contains(Gui.ms())){close(code_tabs.tab(i).source); break;}}
+         if(code_tabs    .contains(Gui.ms())){REPA(code_tabs)if(code_tabs.tab(i).contains(Gui.ms())){Ms.eat(2); close(code_tabs.tab(i).source); break;}}
       }
 
       if(cur())cur()->suggestionsSetRect();
