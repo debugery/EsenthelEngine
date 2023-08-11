@@ -79,7 +79,7 @@ static Thread           SoundThread;
 static Threads          SoundThreads;
 static SyncEvent        SoundEvent, SoundWaiting;
 static Bool             SoundWaited;
-static Int              SoundPause, SoundMaxConc=16, SoundMaxThread=1;
+static Int              SoundPause, SoundMaxConc=24, SoundMaxThread=1;
 static Flt              SoundMinVol=0.020f, // min volume required for a sound to play, this value was chosen by playing music at half volume, and then playing a sound with different volumes, the value was chosen at which the sound couldn't be heard
                         SoundPlayPriority=SoundMinVol/2, // if a sound is already playing, then increase its priority to avoid playing/stopping due to minor priority differences which causes overhead
                         SoundGroupPriority[VOLUME_NUM];

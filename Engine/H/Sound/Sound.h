@@ -273,7 +273,7 @@ void SoundPlay(               C UID         &id  , C Vec &pos, Flt range=1, Flt 
 void SoundPlay(const_mem_addr SoundCallback &call, C Vec &pos, Flt range=1, Flt volume=1, VOLUME_GROUP volume_group=VOLUME_FX, Flt speed=1); // play 3D sound, 'call'=sound call back   , 'pos'=sound position in World, 'range'=sound range multiplier (0..Inf), 'volume'=sound volume (0..1), 'speed'=sound speed (0..3)
 
 Flt SoundMinVolume    ();   void SoundMinVolume    (Flt volume); // get/set minimum volume required to play a sound            , default=0.02, if volume of a sound is less than the specified value then it will be skipped for faster processing
-Int SoundMaxConcurrent();   void SoundMaxConcurrent(Int max   ); // get/set maximum number of concurrent sounds                , default=16  , if number of sounds exceeds the specified limit then sounds with lower priority will be skipped for faster processing, specifying negative value (-1) is the same as allowing unlimited number of concurrent sounds
+Int SoundMaxConcurrent();   void SoundMaxConcurrent(Int max   ); // get/set maximum number of concurrent sounds                , default=24  , if number of sounds exceeds the specified limit then sounds with lower priority will be skipped for faster processing, specifying negative value (-1) is the same as allowing unlimited number of concurrent sounds
 Int SoundMaxThreads   ();   void SoundMaxThreads   (Int max   ); // get/set maximum number of threads used for sound processing, default=1
 /******************************************************************************/
 #if EE_PRIVATE
