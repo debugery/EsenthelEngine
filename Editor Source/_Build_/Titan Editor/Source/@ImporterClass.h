@@ -59,6 +59,7 @@ public:
          DOWNMIX_MIX,
       };
       static bool DownMix(ptr data, int &size, DOWNMIX downmix);
+      static bool DownBit(ptr data, int &size, byte bytes);
 
       bool import(); // !! this is called on a secondary thread !!
 

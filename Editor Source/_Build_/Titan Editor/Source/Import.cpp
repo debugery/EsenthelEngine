@@ -210,6 +210,21 @@ ImporterClass Importer;
          }
          return true;
       }
+      bool ImporterClass::Import::DownBit(ptr data, int &size, byte bytes)
+      {
+         switch(bytes)
+         {
+            default: return false; // unsupported
+            case  2: return true; // 16-bit
+            case  3: // 24-bit
+            {
+               if(size% 3)return false;
+                  size/=3;
+               int  samples=size; size*=2;
+               FREP(samples)((short*)data)[i]=*(short*)((byte*)data+i*3+1);
+            }return true;
+         }
+      }
       bool ImporterClass::Import::import() // !! this is called on a secondary thread !!
       {
          Mems<FileParams> files=FileParams::Decode(T.file);
@@ -243,7 +258,7 @@ ImporterClass Importer;
                int         rel_bit_rate=-1;       C TextParam *rbr  =files[0].findParam("relBitRate"); if(!rbr)rbr=files[0].findParam("relativeBitRate"); if(rbr)rel_bit_rate=rbr->asInt();
                if(codec || rel_bit_rate>=0 || start>0 || end>=0 || length>=0 || hz>0 || apply_vol || downmix)
                {
-                  SoundStream s; if(s.create(file) && s.block())
+                  SoundStream s; if(s.create(file) && s.block())if(s.bits()==16 || s.bits()==24)
                   {
                      long  start_sample=((start> 0) ? RoundL(start*s.frequency()) :           0); MIN(start_sample, s.samples());
                      long    end_sample=((end  >=0) ? RoundL(end  *s.frequency()) : s.samples()); MIN(  end_sample, s.samples());
@@ -284,6 +299,7 @@ ImporterClass Importer;
 
                         raw.writeMem();
                         byte temp[65536];
+                        int min_size=SIZE(temp)/s.block()*s.block();
                         if(!s.pos(start_sample*s.block()))goto error;
                         long size=length_sample*s.block();
                         if(codec==SOUND_WAV)
@@ -292,7 +308,8 @@ ImporterClass Importer;
                            {
                               for(; size>0; )
                               {
-                                 int r=s.set(temp, Min(size, (int)SIZE(temp))); if(r<=0)goto error; size-=r;
+                                 int r=s.set(temp, Min(size, min_size)); if(r<=0)goto error; size-=r;
+                                 if(!DownBit(temp, r, s.bytes()))goto error;
                                  if(downmix && !DownMix(temp, r, downmix))goto error;
                                  if(apply_vol && !ApplyVolume(temp, r, volume))goto error;
                                  if(!encoder.encode(temp, r))goto error;
@@ -309,9 +326,10 @@ ImporterClass Importer;
                               bool first=true;
                               for(; size>0; )
                               {
-                                 int r=Min(size, (int)SIZE(temp));
+                                 int r=Min(size, min_size);
                                  if(first)MIN(r, frame_size); // make sure we encode only the first frame with higher bit rate
                                  r=s.set(temp, r); if(r<=0)goto error; size-=r;
+                                 if(!DownBit(temp, r, s.bytes()))goto error;
                                  if(downmix && !DownMix(temp, r, downmix))goto error;
                                  if(apply_vol && !ApplyVolume(temp, r, volume))goto error;
                                  if(!encoder.encode(temp, r))goto error;
@@ -333,7 +351,8 @@ ImporterClass Importer;
                            {
                               for(; size>0; )
                               {
-                                 int r=s.set(temp, Min(size, (int)SIZE(temp))); if(r<=0)goto error; size-=r;
+                                 int r=s.set(temp, Min(size, min_size)); if(r<=0)goto error; size-=r;
+                                 if(!DownBit(temp, r, s.bytes()))goto error;
                                  if(downmix && !DownMix(temp, r, downmix))goto error;
                                  if(apply_vol && !ApplyVolume(temp, r, volume))goto error;
                                  if(!encoder.encode(temp, r))goto error;
