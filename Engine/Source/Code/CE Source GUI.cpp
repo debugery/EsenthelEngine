@@ -852,6 +852,11 @@ static void ShowElmNames(C Str &str, C Rect &rect, C GuiPC &gpc, C Line *line, C
    UID id; VecI2 range; FREPA(str)if(TextToIDAt(str, i, id, range))
    {
       Bool comment=(line ? line->Type(i)==TOKEN_COMMENT : view_line ? view_line->CodeLine::type(i)==TOKEN_COMMENT : false);
+      if( !comment)
+      {
+       C Line *l=(view_line ? view_line->linePtr() : line);
+         if(l->tokens_preproc_condition_unavailable)comment=true;
+      }
       ShowElmName(id, rect, gpc, range, comment);
    }
 }

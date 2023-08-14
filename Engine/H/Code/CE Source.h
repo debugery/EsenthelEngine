@@ -60,8 +60,8 @@ struct Line : Str, Text, LineMode
    void clear    (          ) {Str::clear(); LineMode::clear(); comment_mode.clear(); tokens_preproc.clear(); changed=true;}
    void operator=(C Str &src) {clear(); Str &s=T; s=src;}
 
-   Char   first     ()C {return Str::first();}
-   Char   last      ()C {return Str::last ();}
+   Char   first     ()C {return Str::first     ();}
+   Char   last      ()C {return Str::last      ();}
    CChar* operator()()C {return Str::operator()();}
 
    Line& clip      (Int length      ) {Str::clip(length);                changed=true; return T;}
@@ -191,6 +191,9 @@ const_mem_addr struct Source : Region
 
       Int line   (       )C {return lines.y;} // get original line index (use Y because it can be -1)
       Int findCol(Int col)C {return findPos(VecI2(col, line()));}
+
+      Line* linePtr()  {if(source && InRange(line(), source->lines))return &source->lines[line()]; return null;}
+    C Line* linePtr()C {return ConstCast(T).linePtr();}
 
       ViewLine(                ) {text_valid=false; source=null;}
       ViewLine(C ViewLine &line)

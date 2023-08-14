@@ -389,7 +389,7 @@ void Line::setTextData() // must be in sync with "Source::ViewLine::setTextData"
 void Source::ViewLine::setTextData() // must be in sync with "Line::setTextData"
 {
    extra.clear();
-   if(Line *line=((source && InRange(T.line(), source->lines)) ? &source->lines[T.line()] : null))
+   if(Line *line=linePtr())
       if(line->tokens_preproc_condition_unavailable)
    {
       extra.color(Theme.colors[TOKEN_PREPROC_DISABLED]);
