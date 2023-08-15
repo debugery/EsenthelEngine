@@ -456,7 +456,7 @@ class Project
        C FileParams &fp=files[i];
        C Str &name=fp.name; if(name.is())
          {
-            UID id; if(DecodeFileName(name, id)) // project element
+            UID id; if(id.fromFileName(name)) // project element
             {
              C Elm *elm=findElm(id); if(!elm){if(invalid)*invalid=name; return true;} // INVALID
             }else // source file
@@ -491,7 +491,7 @@ class Project
             {
                
             }else
-            if(DecodeFileName(name, id)) // project element
+            if(id.fromFileName(name)) // project element
             {
              C Elm *elm=findElm(id); if(!elm || !ElmImageLike(elm.type)){if(invalid)*invalid=name; return true;} // INVALID
             }else // source file
@@ -916,7 +916,7 @@ class Project
       for(FileFind ff(temp_tex_dynamic_path); ff(); )
       {
          bool tex_used=false;
-         UID  tex_id; if(DecodeFileName(ff.name, tex_id))
+         UID  tex_id; if(tex_id.fromFileName(ff.name))
          {
             tex_used=used.binaryHas(tex_id);
             if(!tex_used)eraseTexFormats(tex_id);
@@ -2736,7 +2736,7 @@ class Project
    {
       if(ff.type==FSTD_DIR)
       {
-         UID id; if(DecodeFileName(ff.name, id))
+         UID id; if(id.fromFileName(ff.name))
          {
             int ver; Str error; LOAD_RESULT result=load3(ff.pathName(), ver, error, SAVE_ID_NAME);
             switch(result)

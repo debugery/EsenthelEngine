@@ -426,7 +426,7 @@ public:
          Image images[6]; REPA(images)
          {
             Image &image=images[i];
-            Str name=faces[i].name; UID image_id; if(DecodeFileName(name, image_id))name=editPath(image_id);else image_id.zero();
+            Str name=faces[i].name; UID image_id; if(image_id.fromFileName(name))name=editPath(image_id);else image_id.zero();
             if(ImportImage(image, name, -1, IMAGE_SOFT, 1, true))
             {
                loaded=true;
@@ -449,7 +449,7 @@ public:
       }else
       if(faces.elms()) // if at least one face is specified
       {
-         Str name=material.reflection_map; UID image_id; if(DecodeFileName(name, image_id))name=editPath(image_id);
+         Str name=material.reflection_map; UID image_id; if(image_id.fromFileName(name))name=editPath(image_id);
          if(ImportImage(reflection, name))
          {
             loaded=true;

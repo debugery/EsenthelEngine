@@ -2390,7 +2390,7 @@ bool LoadImage(C Project *proj, Image &image, TextParam *image_resize, C FilePar
    {
       if(proj) // check for element ID
       {
-         UID image_id; if(DecodeFileName(name, image_id))
+         UID image_id; if(image_id.fromFileName(name))
          {
             name=proj->editPath(image_id); // if the filename is in UID format then it's ELM_IMAGE
             if(C Elm *image=proj->findElm(image_id))if(C ElmImage *data=image->imageData())lum_to_alpha=data->alphaLum();
@@ -3902,7 +3902,7 @@ Mems<FileParams> _DecodeFileParams(C Str &str)
       {
          if(ff.type==FSTD_FILE)
          {
-            UID id; if(DecodeFileName(ff.name, id))
+            UID id; if(id.fromFileName(ff.name))
             {
                SyncLocker locker(lock);
                Elm &elm=elms_thread.New();

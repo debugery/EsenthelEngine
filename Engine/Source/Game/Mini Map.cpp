@@ -62,7 +62,7 @@ Bool MiniMap::load(C Str &name)
    del();
    if(name.is())
    {
-      if(!DecodeFileName(name, _id))_id.zero();
+      if(!_id.fromFileName(name))_id.zero();
      _name=name; _name.tailSlash(false);
       if(!_settings.load(_name+"/Settings"))goto error;
    }

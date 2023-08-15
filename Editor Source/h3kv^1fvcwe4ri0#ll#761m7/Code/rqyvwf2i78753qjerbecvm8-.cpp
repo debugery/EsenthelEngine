@@ -439,7 +439,7 @@ class Area : BlendObject
             case 0:
             {
                hm.height_map.load(*f); hm.mtrl_map.load(*f);
-               hm.mtrls.setNum(f.getInt()); REPA(hm.mtrls){UID &mtrl=hm.mtrls[i]; if(!DecodeFileName(GetStr(*f), mtrl))mtrl.zero();}
+               hm.mtrls.setNum(f.getInt()); REPA(hm.mtrls){UID &mtrl=hm.mtrls[i]; if(!mtrl.fromFileName(GetStr(*f)))mtrl.zero();}
             }break;
          }
          if(cr.name()=="HeightmapMesh")if(hm)switch(cr.ver())

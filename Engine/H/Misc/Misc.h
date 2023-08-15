@@ -280,10 +280,8 @@ Bool DecodeFileName(C Str &src ,  Ptr dest, Int size); // decode       binary da
 T1(TYPE) Str  EncodeFileName(             C TYPE &elm) {return EncodeFileName(      &elm, SIZE(elm));}
 T1(TYPE) void EncodeFileName(  Str &dest, C TYPE &elm) {return EncodeFileName(dest, &elm, SIZE(elm));}
 T1(TYPE) Bool DecodeFileName(C Str &src ,   TYPE &elm) {return DecodeFileName(src , &elm, SIZE(elm));}
-         Bool DecodeFileName(CChar *src ,   UID  &elm);                                     // UID optimized version
-  inline Bool DecodeFileName(C Str &src ,   UID  &elm) {return DecodeFileName(src(), elm);} // UID optimized version
 
-UID FileNameID(C Str &name); // convert base of 'name' (obtained using 'GetBase') to ID using 'DecodeFileName', 'UIDZero' on fail, this works like "UID id; DecodeFileName(GetBase(name), id); return id;"
+UID FileNameID(C Str &name); // convert base of 'name' (obtained using 'GetBase') to ID using 'fromFileName', 'UIDZero' on fail, this works like "UID id; id.fromFileName(GetBase(name)); return id;"
 
 Str  EncodeRaw(              CPtr src , Int size); // encode 'src' binary data of 'size' size, into        string, this is the most efficient encoding (2-bytes per character), warning: string may contain '\0' null characters
 void EncodeRaw(  Str  &dest, CPtr src , Int size); // encode 'src' binary data of 'size' size, into 'dest' string, this is the most efficient encoding (2-bytes per character), warning: string may contain '\0' null characters

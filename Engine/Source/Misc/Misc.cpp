@@ -613,8 +613,7 @@ error:
    zero(); return false;
 }
 
-StrO UID::  asFileName(           )C {return _EncodeFileName(      T);}
-Bool UID::fromFileName(C Str &text)  {return  DecodeFileName(text, T);}
+StrO UID::asFileName()C {return _EncodeFileName(T);}
 
 StrO UID::asCanonical()C
 {
@@ -650,9 +649,9 @@ Bool UID::fromText(C Str &text)
        end=TextPosI(t, '\n'); if(end>=0)t.clip(end  ); // remove everything until '\n', this is needed in case there are multiple ID's per line (for example used in PARAM_ID_ARRAY)
    t.removeOuterWhiteChars(); if(t.first()=='"')t.remove(0); // remove first quotation (ending is done above)
 
-   if(       fromHex(t   ))return true; // 32 char
-   if(   fromCString(t   ))return true;
-   if(DecodeFileName(t, T))return true; // 24 char
+   if(fromHex     (t))return true; // 32 char
+   if(fromCString (t))return true;
+   if(fromFileName(t))return true; // 24 char
    zero(); return false;
 }
 UID& UID::operator+=(Int i)
@@ -2792,11 +2791,11 @@ C UInt *src=id.i;
    name[n]='\0';
    return name;
 }
-Bool DecodeFileName(CChar *src, UID &id)
+Bool UID::fromFileName(CChar *src)
 {
    if(src)
    {
-      UInt *d=id.i; REP(SIZE(id)/4)
+      UInt *d=T.i; REP(SIZE(T)/4)
       {
          ASSERT(CleanFileNameElms==41); // this requires 6 steps per UInt
          UInt u=0, mul=1; REPD(step, 6)
@@ -2808,7 +2807,7 @@ Bool DecodeFileName(CChar *src, UID &id)
          *d++=u;
       }
       if(!*src)return true;
-   }else id.zero();
+   }else zero();
    return false;
 }
 /******************************************************************************/
@@ -3543,7 +3542,7 @@ Bool SetRegData(REG_KEY_GROUP reg_key_group, C Str &name, CPtr data, Int size)
 /******************************************************************************/
 UID FileNameID(C Str &name)
 {
-   UID id; if(name.is() && DecodeFileName(_GetBase(name), id))return id;
+   UID id; if(name.is() && id.fromFileName(_GetBase(name)))return id;
    return UIDZero;
 }
 /******************************************************************************/

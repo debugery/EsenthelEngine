@@ -98,7 +98,7 @@ MaterialRegion MtrlEdit;
          UID image_id; REPA(files)
          {
             FileParams &fp=files[i];
-            if(DecodeFileName(fp.name, image_id))fp.name=Proj.elmFullName(image_id);
+            if(image_id.fromFileName(fp.name))fp.name=Proj.elmFullName(image_id);
             ReplaceElmNames(fp.nodes);
          }
       }

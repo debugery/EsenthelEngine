@@ -26,9 +26,10 @@ struct UID // 128-bit Unique Identifier
    Bool fromCString(C Str &text) ; // set  from C string format, for example "UID(534740238, 76182471, 691827931, 239847293)", sets to zero and returns false on fail (if 'text' is of invalid format)
 
    Str    asFileName(           )C; // return in file name format of 24 character length, for example "h3kv^1fvcwe4ri0#ll#761m7"
-   Bool fromFileName(C Str &text) ; // set  from file name format of 24 character length, for example "h3kv^1fvcwe4ri0#ll#761m7", sets to zero and returns false on fail (if 'text' is of invalid format)
+   Bool fromFileName(CChar *text) ; // set  from file name format of 24 character length, for example "h3kv^1fvcwe4ri0#ll#761m7", sets to zero and returns false on fail (if 'text' is of invalid format)
+   Bool fromFileName(C Str &text) {return fromFileName(text());}
 
-   Bool fromText(C Str &text); // set from text, sets to zero and returns false on fail, this function will try to decode the ID from different kinds of formats (hex, C string, DecodeFileName)
+   Bool fromText(C Str &text); // set from text, sets to zero and returns false on fail, this function will try to decode the ID from different kinds of formats (hex, C string, file name)
 
    UID& operator++() {T+=1u; return T;}   void operator++(int) {T+=1u;} // use unsigned because those methods are faster
    UID& operator--() {T-=1u; return T;}   void operator--(int) {T-=1u;} // use unsigned because those methods are faster

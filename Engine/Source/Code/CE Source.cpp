@@ -224,7 +224,7 @@ static Bool LineFileName(C Str &text, Int x, VecI2 &range) // detect if position
       Int b=x+1; for(; b<text.length(); b++)if(text[b]=='"')break;
       if(b-a==24)
       {
-         Str s; for(Int i=a; i<b; i++)s+=text[i]; UID id; if(DecodeFileName(s, id)){range.set(a, b); return true;}
+         Str s; for(Int i=a; i<b; i++)s+=text[i]; UID id; if(id.fromFileName(s)){range.set(a, b); return true;}
       }
    }
    return false;

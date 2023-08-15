@@ -189,7 +189,7 @@ class ImporterClass
                   // load helper data from the project
                   File src;
                   UID  image_id;
-                  REPA(files)if(DecodeFileName(files[i].name, image_id))if(src.read(Proj.editPath(image_id)))
+                  REPA(files)if(image_id.fromFileName(files[i].name))if(src.read(Proj.editPath(image_id)))
                   {
                      ImageEx &image=images(i);
                      src.copy(image.raw.writeMem());

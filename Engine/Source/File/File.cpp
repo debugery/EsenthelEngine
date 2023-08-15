@@ -1691,7 +1691,7 @@ File& File::putAsset(CChar *t)
 {
    if(!Is(t))putByte(0);else
    {
-      UID id; if(DecodeFileName(t, id))putAsset(id);else putByte(0xFF).putStr(t);
+      UID id; if(id.fromFileName(t))putAsset(id);else putByte(0xFF).putStr(t);
    }
    return T;
 }
@@ -2224,7 +2224,7 @@ Str File::_getStr16()
 }
 File& File::_putAsset(CChar *t)
 {
-   if(!Is(t))putByte(0);else {UID id; if(DecodeFileName(t, id))putByte(2)<<id;else putByte(1).putStr(t);}
+   if(!Is(t))putByte(0);else {UID id; if(id.fromFileName(t))putByte(2)<<id;else putByte(1).putStr(t);}
    return T;
 }
 Str File::_getAsset()

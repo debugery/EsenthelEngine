@@ -101,7 +101,7 @@ Bool TextToIDAt(C Str &text, Int pos, UID &id, VecI2 &range)
    if(text[pos]=='"' && text[pos+24+1]=='"') // ".." 24 char ID
    {
       TempStr.clear(); for(Int c=pos+1, j=c; j<c+24; j++)TempStr+=text[j]; // operate on 'TempStr' so it doesn't require memory allocation all the time
-      if(DecodeFileName(TempStr, id))
+      if(id.fromFileName(TempStr))
       {
          range.set(pos, pos+24+1);
          return true;

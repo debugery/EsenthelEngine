@@ -249,7 +249,7 @@ SoundStream& _Sound::stream() // !! this may be called on the main thread !!
 }
 
 C Str& _Sound::name()C {return deleted ? S : _name;} // !! this is also important for '_Sound.save' !! since we're not deleting '_name' to avoid synchronization then return no name if it already got deleted
-  UID  _Sound::id  ()C {UID id; if(!deleted && DecodeFileName(_name, id))return id; return UIDZero;}
+  UID  _Sound::id  ()C {UID id; if(!deleted && id.fromFileName(_name))return id; return UIDZero;}
 
 Bool        _Sound::is       ()C {return !deleted;}
 Int         _Sound::channels ()C {return stream().channels ();}

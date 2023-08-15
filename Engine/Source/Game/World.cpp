@@ -247,7 +247,7 @@ Bool WorldManager::NewTry(C Str &world_name)
 
    if(FExist(world_name))
    {
-      if(!DecodeFileName(world_name, _id))_id.zero();
+      if(!_id.fromFileName(world_name))_id.zero();
       T._name=world_name;
       T._data_path=world_name; _data_path.tailSlash(true);
 

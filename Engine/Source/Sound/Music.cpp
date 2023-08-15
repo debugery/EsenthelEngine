@@ -26,8 +26,8 @@ MusicManager Music  (VOLUME_MUSIC  ),
              Ambient(VOLUME_AMBIENT);
 /******************************************************************************/
 // functions below assume lock
-static   Bool LockedSongID  (Int global_song, UID &id) {return InRange(global_song, Songs) && DecodeFileName(Songs[global_song].name, id);} // !! does not zero 'id' on fail !!
-static C Str& LockedSongName(Int global_song         ) {return InRange(global_song, Songs) ?                 Songs[global_song].name : S;}
+static   Bool LockedSongID  (Int global_song, UID &id) {return InRange(global_song, Songs) && id.fromFileName(Songs[global_song].name);} // !! does not zero 'id' on fail !!
+static C Str& LockedSongName(Int global_song         ) {return InRange(global_song, Songs) ?                  Songs[global_song].name : S;}
 static   Int  LockedSongFind(CChar *name             ) {if(Is(name))FREPA(Songs)if(EqualPath(name, Songs[i].name))return i; return -1;}
 static   Int  LockedSongGet (CChar *name             )
 {
