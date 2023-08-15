@@ -422,6 +422,14 @@ UID _Cache::id(CPtr data)C
    }
    return UIDZero;
 }
+UID _Cache::_id(CPtr data)C
+{
+   if(C Elm *elm=dataElm(data))
+   {
+      UID id; if(id.fromFileName(elmDesc(*elm).file))return id;
+   }
+   return UIDZero;
+}
 /******************************************************************************/
 INLINE void _Cache::lockedIncRef(CPtr data)
 {

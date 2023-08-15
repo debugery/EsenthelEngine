@@ -76,8 +76,9 @@ T1(TYPE) struct Cache : _Cache // Cache - container for dynamically loaded data,
    template<Cache<TYPE> &CACHE>  CChar* name(C CacheElmPtr<TYPE,CACHE> &data, CChar *path)C {return name(data(), path);} // get object file name, null on fail
 
    // get object file name ID (this will return ID of the object file name assuming that the object is stored in the cache and its file name was created using 'EncodeFileName')
-                                 UID id(C             TYPE        *data)C;                     // get object file name ID, 'UIDZero' on fail
-   template<Cache<TYPE> &CACHE>  UID id(C CacheElmPtr<TYPE,CACHE> &data)C {return id(data());} // get object file name ID, 'UIDZero' on fail
+                                 UID  id(C             TYPE        *data)C;                     // get object file name ID, 'UIDZero' on fail
+   template<Cache<TYPE> &CACHE>  UID  id(C CacheElmPtr<TYPE,CACHE> &data)C {return id(data());} // get object file name ID, 'UIDZero' on fail
+                                 UID _id(C             TYPE        *data)C;                     // get object file name ID, 'UIDZero' on fail, this method is faster however it's unsafe, 'data' MUST belong to cache or be null !!
 
    // get
    Int elms()C; // get number of elements in container

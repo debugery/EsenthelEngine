@@ -1899,7 +1899,8 @@ T1(TYPE)  TYPE*  Cache<TYPE>::operator()(C UID &id  , CChar *path) {return (TYPE
 
 T1(TYPE)  C Str&  Cache<TYPE>::name    (C TYPE *data             )C {return super::name    (data       );}
 T1(TYPE)  CChar*  Cache<TYPE>::name    (C TYPE *data, CChar *path)C {return super::name    (data,  path);}
-T1(TYPE)  UID     Cache<TYPE>::id      (C TYPE *data             )C {return super::id      (data       );}
+T1(TYPE)  UID     Cache<TYPE>:: id     (C TYPE *data             )C {return super:: id     (data       );}
+T1(TYPE)  UID     Cache<TYPE>::_id     (C TYPE *data             )C {return super::_id     (data       );}
 T1(TYPE)  Int     Cache<TYPE>::ptrCount(C TYPE *data             )C {return super::ptrCount(data       );}
 #if EE_PRIVATE
 T1(TYPE)  Bool    Cache<TYPE>::has     (C TYPE *data             )C {return super::has     (data       );}
