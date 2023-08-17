@@ -3625,10 +3625,18 @@ class ProjectEx : ProjectHierarchy
          {
             if(ListElm *elm=list.litToListElm())
             {
-               if(!elm.close()) // try closing highlighted element
-                  for(; --list.lit>=0; )if(ListElm *e=list.litToListElm())if(e.offset<elm.offset && e.close())break; // find first parent
-               refresh(false, false);
-               list.scrollTo(list.lit-4); // scroll after refresh
+               if(elm.close()) // try closing highlighted element
+               {
+               closed:
+                  refresh(false, false);
+                  list.scrollTo(list.lit-4); // scroll after refresh
+               }else
+               if(ListElm *parent=elm.vis_parent) // try closing its paren
+                  if(parent.close())
+               {
+                  list.lit=list.dataToVis(parent);
+                  goto closed;
+               }
             }
          }
       }
